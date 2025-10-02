@@ -1,5 +1,4 @@
 import torch
-from torch.cuda.amp import autocast
 import math
 from functools import partial
 import numpy as np
@@ -676,7 +675,6 @@ class Conv1dWithConstraint(nn.Conv1d):
         self.doWeightNorm = doWeightNorm
         super(Conv1dWithConstraint, self).__init__(*args, **kwargs)
         
-    @autocast(True)
     def forward(self, x):
         if self.doWeightNorm: 
             self.weight.data = torch.renorm(
@@ -690,7 +688,6 @@ class LinearWithConstraint(nn.Linear):
         self.doWeightNorm = doWeightNorm
         super(LinearWithConstraint, self).__init__(*args, **kwargs)
 
-    @autocast(True)
     def forward(self, x):
         if self.doWeightNorm: 
             self.weight.data = torch.renorm(
